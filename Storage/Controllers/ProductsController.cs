@@ -25,6 +25,26 @@ namespace Storage.Controllers
             return View(await _context.Product.ToListAsync());
         }
 
+        public async Task<IActionResult> View()
+        {
+            var v = await _context.Product.ToListAsync();
+            List<ProductViewModel> produ = new List<ProductViewModel>();
+            ProductViewModel p;
+
+            foreach (var prod in v)
+            {
+                p = new ProductViewModel();
+
+                p.Name = prod.Name;
+                p.Price = prod.Price;
+                p.Count = prod.Count;
+                p.InvetoryValue = prod.Price * prod.Count;
+                produ.Add(p);
+            }
+
+            return View(produ);
+        }
+
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -44,10 +64,10 @@ namespace Storage.Controllers
         }
 
         // GET: Products/Create
-        public IActionResult Create()
+        /*public IActionResult Create()
         {
             return View();
-        }
+        }*/
 
         // POST: Products/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
