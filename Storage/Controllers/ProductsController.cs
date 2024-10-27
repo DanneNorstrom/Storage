@@ -173,5 +173,32 @@ namespace Storage.Controllers
         {
             return _context.Product.Any(e => e.Id == id);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Filter(string category)
+        { 
+            var v = await _context.Product.ToListAsync();
+            List<Product> produ = new List<Product>();
+            Product p;
+
+            foreach (var prod in v)
+            {
+                if (prod.Category == category) 
+                {
+                    p = new Product();
+
+                    p.Name = prod.Name;
+                    p.Price = prod.Price;
+                    p.Orderdate = prod.Orderdate;   
+                    p.Category = prod.Category;
+                    p.Shelf = prod.Shelf;
+                    p.Count = prod.Count;
+                    p.Description = prod.Description;
+                    produ.Add(p);
+                }
+            }
+
+            return View(produ);
+        }
     }
 }

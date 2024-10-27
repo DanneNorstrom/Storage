@@ -12,7 +12,6 @@ namespace Storage.Data
         public StorageContext (DbContextOptions<StorageContext> options)
             : base(options)
         {
-            //int t = 0;
         }
 
         public DbSet<Storage.Models.Product> Product { get; set; } = default!;
